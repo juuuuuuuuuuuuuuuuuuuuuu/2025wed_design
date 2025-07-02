@@ -2,64 +2,47 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>QR 급식 인증 시스템</title>
+  <title>QR 코드와 학번으로 급식먹기 화면</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container" id="inputScreen">
-    <h1>🍱 QR 찍고 밥 먹자!</h1>
-    <p>QR을 찍거나 학번을 입력해 주세요</p>
-    <input type="text" placeholder="학번 입력" id="studentIdInput">
-    <button onclick="showOutput()">확인</button>
+  <div class="screen" id="inputs">
+    <h1>QR 스캔해주세요</h1>
+    <h3>QR이 없다면 학번을 입력해주세요</h3>
+    <input type="text" id="sidinput" placeholder="학번 5자리 입력 (예: 20720)">
+    <button onclick="startLoading()">확인</button>
   </div>
 
-  <div class="container hidden" id="outputScreen">
-    <div class="student-card" id="studentCard">
-      <img src="https://via.placeholder.com/120" alt="학생 사진">
-      <div class="info">
-        <p><strong>이름:</strong> 홍길동</p>
-        <p><strong>학번:</strong> 3201</p>
-        <p><strong>학년:</strong> <span id="gradeText">3학년</span></p>
+  <div class="shidden" id="loadings">
+    <div class="loading"></div>
+    <h2>잠시만 기다려주세요</h2>
+  </div>
+
+
+  <div class="shidden" id="outputs">
+    <div class="folder" id="folderBox">
+      <div class="grade" id="grades">3학년</div>
+      <div class="notice">
+        <img src="https://via.placeholder.com/200" alt="학생 사진" class="photo">
+        <div class="noticein">
+          <p><strong>이름:</strong> 김땡떙</p>
+          <p><strong>학년:</strong> 2학년</p>
+          <p><strong>반:</strong> 7반</p>
+          <p><strong>번호:</strong> 20번</p>
+        </div>
       </div>
     </div>
-    <button onclick="goBack()">뒤로가기</button>
+    <button onclick="goBack()">↩ 다시 입력</button>
   </div>
 
-  <script>
-    function showOutput() {
-      const id = document.getElementById('studentIdInput').value;
-      const output = document.getElementById('outputScreen');
-      const input = document.getElementById('inputScreen');
-      const card = document.getElementById('studentCard');
-      const gradeText = document.getElementById('gradeText');
+<div class="shidden" id="errors">
+  <p>학년 정보가 올바르지 않습니다!
+    다시 입력해 주세요
+  </p>
+  <button onclick="goBackFromError()">다시 입력</button>
+</div>
 
-      let grade = id.charAt(0); // 학번 첫자리 = 학년
-
-      if (grade === "3") {
-        card.style.backgroundColor = "#3b82f6";
-        gradeText.textContent = "3학년";
-        gradeText.style.color = "#fff";
-      } else if (grade === "2") {
-        card.style.backgroundColor = "#f97316";
-        gradeText.textContent = "2학년";
-        gradeText.style.color = "#fff";
-      } else {
-        card.style.backgroundColor = "#ffffff";
-        gradeText.textContent = "1학년";
-        gradeText.style.color = "#000";
-      }
-
-      input.classList.add('hidden');
-      output.classList.remove('hidden');
-    }
-
-    function goBack() {
-      document.getElementById('inputScreen').classList.remove('hidden');
-      document.getElementById('outputScreen').classList.add('hidden');
-      document.getElementById('studentIdInput').value = '';
-    }
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
